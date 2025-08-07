@@ -1,4 +1,3 @@
-
 # 🏥 LearnWorlds RAG Assistant - Plateforme ECOS Infirmier
 
 ## 📋 Vue d'ensemble
@@ -246,3 +245,4 @@ GET /diagnostic      # Page de diagnostic complète
 **Développé pour l'excellence en formation médicale** 🏥✨
 
 *Cette plateforme révolutionne l'apprentissage médical en combinant l'intelligence artificielle avec la simulation clinique interactive.*
+
