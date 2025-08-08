@@ -11,6 +11,7 @@ export default defineConfig({
     },
   },
   root: "./client",
+
   server: {
     host: "0.0.0.0",
     port: 5173,
@@ -28,6 +29,12 @@ export default defineConfig({
     outDir: "../dist",
     rollupOptions: {
       external: [],
+      input: {
+        main: "./client/index.html",
+        teacher: "./client/teacher.html",
+        student: "./client/student.html",
+        admin: "./client/admin.html",
+      },
     },
   },
   optimizeDeps: {

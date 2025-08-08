@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -14,10 +14,47 @@ import { apiRequest } from "@/lib/queryClient";
 import { useMutation } from "@tanstack/react-query";
 
 interface StudentPageProps {
-  email: string;
+  email?: string;
 }
 
-export default function StudentPage({ email }: StudentPageProps) {
+export default function StudentPage({ email: propEmail }: StudentPageProps) {
+  const [email, setEmail] = useState<string | undefined>(propEmail);
+
+  // Récupérer l'email depuis l'URL pour Vercel
+  useEffect(() => {
+    if (!email) {
+      // Récupérer l'email depuis l'URL path ou query params
+      const urlPath = window.location.pathname;
+      const urlParams = new URLSearchParams(window.location.search);
+      
+      // Option 1: depuis le path /student/email@domain.com
+      const pathMatch = urlPath.match(/\/student\/([^/]+)/);
+      if (pathMatch && pathMatch[1]) {
+        setEmail(decodeURIComponent(pathMatch[1]));
+      }
+      // Option 2: depuis les query params ?email=email@domain.com
+      else if (urlParams.get('email')) {
+        setEmail(urlParams.get('email') || undefined);
+      }
+    }
+  }, [email]);
+  
+  // Vérifier que l'email est défini avant de continuer
+  if (!email) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
+        <Card className="w-full max-w-md">
+          <CardHeader>
+            <CardTitle className="text-center text-red-600">Accès non autorisé</CardTitle>
+            <CardDescription className="text-center">
+              Veuillez accéder à cette page via un lien valide avec votre email.
+            </CardDescription>
+          </CardHeader>
+        </Card>
+      </div>
+    );
+  }
+  
   const [activeSessionId, setActiveSessionId] = useState<number | null>(null);
   const [viewingReport, setViewingReport] = useState<number | null>(null);
   const [showDiagnostic, setShowDiagnostic] = useState(false);

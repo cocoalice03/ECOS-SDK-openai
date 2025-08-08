@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ECOS Infirmier - Admin</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module">
+      import React from 'react';
+      import ReactDOM from 'react-dom/client';
+      import './src/index.css';
+      import App from './src/App.tsx';
+      
+      ReactDOM.createRoot(document.getElementById('root')).render(
+        React.createElement(React.StrictMode, null,
+          React.createElement(App)
+        )
+      );
+    </script>
+  </body>
+</html>

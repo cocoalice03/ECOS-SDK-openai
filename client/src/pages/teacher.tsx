@@ -350,12 +350,32 @@ interface TeacherPageProps {
   email?: string;
 }
 
-function TeacherPage({ email }: TeacherPageProps) {
+function TeacherPage({ email: propEmail }: TeacherPageProps) {
   const [activeTab, setActiveTab] = useState('overview');
   const [editingScenario, setEditingScenario] = useState<any>(null);
   const [deletingScenario, setDeletingScenario] = useState<any>(null);
   const [viewingSessionDetails, setViewingSessionDetails] = useState<any>(null);
   const [viewingReport, setViewingReport] = useState<number | null>(null);
+  const [email, setEmail] = useState<string | undefined>(propEmail);
+
+  // Récupérer l'email depuis l'URL pour Vercel
+  useEffect(() => {
+    if (!email) {
+      // Récupérer l'email depuis l'URL path ou query params
+      const urlPath = window.location.pathname;
+      const urlParams = new URLSearchParams(window.location.search);
+      
+      // Option 1: depuis le path /teacher/email@domain.com
+      const pathMatch = urlPath.match(/\/teacher\/([^/]+)/);
+      if (pathMatch && pathMatch[1]) {
+        setEmail(decodeURIComponent(pathMatch[1]));
+      }
+      // Option 2: depuis les query params ?email=email@domain.com
+      else if (urlParams.get('email')) {
+        setEmail(urlParams.get('email') || undefined);
+      }
+    }
+  }, [email]);
 
   // Add debugging for authentication issues - MUST be before any conditional returns
   React.useEffect(() => {
