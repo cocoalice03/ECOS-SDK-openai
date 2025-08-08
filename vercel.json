@@ -31,16 +31,6 @@
       "destination": "/server/index.ts"
     }
   ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/server/index.ts"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/dist/$1"
-    }
-  ],
   "env": {
     "NODE_ENV": "production"
   }
